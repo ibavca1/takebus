@@ -13,7 +13,6 @@ class NavigationBar extends React.Component{
     }
     render(){ 
         const { isAuthenticated } = this.props.auth;
-        //console.log(this.props);
         const userLink = (
             <ul className="nav navbar-nav navbar-right">
                 <li><a href = "#" onClick={this.logout.bind(this)}>Logout</a></li>

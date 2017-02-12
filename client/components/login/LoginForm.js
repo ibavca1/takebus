@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import TextFieldGroup from '../TextFieldGroup';
 import { connect } from 'react-redux';
 import { userLoginRequest } from '../../actions/loginActions';
+import { addLogPanelMessages } from '../../actions/logActions';
 
 
 class LoginForm extends React.Component {
@@ -20,15 +21,16 @@ class LoginForm extends React.Component {
     onSubmit(e){
         e.preventDefault();
         this.setState({errors: {}});
-        //console.log(this.state);
         this.props.userLoginRequest(this.state).then(
             (res) => {
-                console.log(this.state);
+                this.props.addLogPanelMessages({
+                    type: '200',
+                    text: 'Welcome.'
+                });
                 this.context.router.push('/');
             },
             (err) => {
-                //console.log(err);
-                //this.setState({ errors: err.response.data.errors, isLoading: false });
+                this.setState({ errors: err.response.data.errors, isLoading: false });
             }
         );
     }
@@ -37,7 +39,6 @@ class LoginForm extends React.Component {
     }
     render(){
         const {errors, identifier, password, isLoading} = this.state;
-        //console.log(this.state);
         return (
             <form onSubmit={this.onSubmit}>
                 <h1>Login</h1>
@@ -56,6 +57,7 @@ class LoginForm extends React.Component {
                     onChange={this.onChange}
                     type="password"
                 />
+                {errors && <span className="help-block">{errors.form}</span>}
                 <div className="form-group"><button className="btn btn-primary btn-lg" disabled={isLoading}>Login</button></div>
             </form>
         );
@@ -63,14 +65,15 @@ class LoginForm extends React.Component {
 }
 
 LoginForm.propTypes = {
-    userLoginRequest: React.PropTypes.func.isRequired
+    userLoginRequest: React.PropTypes.func.isRequired,
+    addLogPanelMessages: React.PropTypes.func
 }
 
 LoginForm.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
 
-export default connect(null, { userLoginRequest })(LoginForm);
+export default connect(null, {userLoginRequest, addLogPanelMessages})(LoginForm);
 
 
 
