@@ -12,10 +12,20 @@ class NavigationBar extends React.Component{
         this.props.userLogoutRequest();
     }
     render(){ 
+        //console.log(this.props.auth);
         const { isAuthenticated } = this.props.auth;
         const userLink = (
             <ul className="nav navbar-nav navbar-right">
-                <li><a href = "#" onClick={this.logout.bind(this)}>Logout</a></li>
+                <li className = "dropdown">
+                    <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        {this.props.auth.user.userName}
+                        <span className="caret"></span>
+                    </a>
+                    <ul className="dropdown-menu" id = "nav-user">
+                        <li><a href = "#" onClick={this.logout.bind(this)}>Выход</a></li>
+                    </ul>
+
+                </li>
             </ul>
         );
         const guestLink = (

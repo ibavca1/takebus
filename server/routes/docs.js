@@ -17,10 +17,10 @@ router.post('/', (req, res) => {
     //     //console.log(bus.data);
     //     console.log(instance.data.viewModel);
     // }))
+    
     if (myReq==0){
         axios.get('http://api.takebus.ml/api/v1/carrier/instance/get/list', { headers: { Authorization: AuthStr } }).then(res=>{
             instance = res.data.viewModel;
-            //console.log(res.data);
         }).then(()=>{;
             res.json(instance);
         });
